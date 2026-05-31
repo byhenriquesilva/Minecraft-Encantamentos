@@ -434,7 +434,7 @@ fun MainScreen(
     .border(1.dp, EnchantmentPurpleNeon.copy(alpha = 0.4f), RoundedCornerShape(8.dp))) {
     Icon(Icons.Default.List, contentDescription = "Grimório", tint = EnchantmentPurpleNeon)
 }
-Spacer(Modifier.width(2.dp))
+Spacer(Modifier.width(1.dp))
                     // Reset button styled as classic stone anvil icon
                     IconButton(
                         onClick = onResetAll,
