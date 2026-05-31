@@ -1,0 +1,6 @@
+{
+  "name": "Minecraft Encantamentos",
+  "description": "Gerenciador intuitivo de encantamentos de armaduras e ferramentas do Minecraft.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
