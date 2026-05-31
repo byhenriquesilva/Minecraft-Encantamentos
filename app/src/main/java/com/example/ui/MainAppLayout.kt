@@ -429,24 +429,27 @@ fun MainScreen(
                             color = MutedSlateText
                         )
                     }
-                    IconButton(onClick = onOpenEncyclopedia,modifier = Modifier
-    .background(EnchantmentPurpleNeon.copy(alpha = 0.15f), RoundedCornerShape(8.dp))
-    .border(1.dp, EnchantmentPurpleNeon.copy(alpha = 0.4f), RoundedCornerShape(8.dp))) {
-    Icon(Icons.Default.List, contentDescription = "Grimório", tint = EnchantmentPurpleNeon)
-}
-Spacer(Modifier.width(0.2.dp))
-                    // Reset button styled as classic stone anvil icon
-                    IconButton(
-                        onClick = onResetAll,
-                        modifier = Modifier
-                            .background(RedstoneRed.copy(alpha = 0.15f), RoundedCornerShape(8.dp))
-                            .border(1.dp, RedstoneRed.copy(alpha = 0.4f), RoundedCornerShape(8.dp))
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Icon(
-                            imageVector = Icons.Default.Delete,
-                            contentDescription = "Limpar Progresso",
-                            tint = RedstoneRed
-                        )
+                        IconButton(onClick = onOpenEncyclopedia, modifier = Modifier
+                            .background(EnchantmentPurpleNeon.copy(alpha = 0.15f), RoundedCornerShape(8.dp))
+                            .border(1.dp, EnchantmentPurpleNeon.copy(alpha = 0.4f), RoundedCornerShape(8.dp))) {
+                            Icon(Icons.Default.List, contentDescription = "Grimório", tint = EnchantmentPurpleNeon)
+                        }
+                        IconButton(
+                            onClick = onResetAll,
+                            modifier = Modifier
+                                .background(RedstoneRed.copy(alpha = 0.15f), RoundedCornerShape(8.dp))
+                                .border(1.dp, RedstoneRed.copy(alpha = 0.4f), RoundedCornerShape(8.dp))
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Delete,
+                                contentDescription = "Limpar Progresso",
+                                tint = RedstoneRed
+                            )
+                        }
                     }
                 }
 
