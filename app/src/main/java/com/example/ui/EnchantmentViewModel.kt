@@ -7,6 +7,9 @@ import androidx.room.Room
 import com.example.data.AppDatabase
 import com.example.data.EnchantmentRepository
 import com.example.data.ItemEnchantment
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -103,6 +106,10 @@ class EnchantmentViewModel(application: Application) : AndroidViewModel(applicat
     // Status notifications/toasts customized for Minecraft enchanting vibe
     private val _saveStatus = MutableStateFlow<String?>(null)
     val saveStatus: StateFlow<String?> = _saveStatus.asStateFlow()
+
+    // Scroll state persistence for MainScreen
+    var savedScrollIndex by mutableStateOf(0)
+    var savedScrollOffset by mutableStateOf(0)
 
     // Definition of items and available enchantments matching the complete list provided
     val categories = listOf(

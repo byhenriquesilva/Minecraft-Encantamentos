@@ -13,6 +13,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -134,6 +135,12 @@ fun MainAppLayout(viewModel: EnchantmentViewModel) {
                         },
                         onResetAll = {
                             viewModel.resetAllProgress()
+                        },
+                        savedScrollIndex = viewModel.savedScrollIndex,
+                        savedScrollOffset = viewModel.savedScrollOffset,
+                        onSaveScroll = { index, offset ->
+                            viewModel.savedScrollIndex = index
+                            viewModel.savedScrollOffset = offset
                         }
                     )
                     is AppScreen.Detail -> {
@@ -357,10 +364,25 @@ fun MainScreen(
     categories: List<CategoryConfig>,
     selections: Map<String, Set<String>>,
     onSelectItem: (String) -> Unit,
-    onResetAll: () -> Unit
+    onResetAll: () -> Unit,
+    savedScrollIndex: Int = 0,
+    savedScrollOffset: Int = 0,
+    onSaveScroll: (Int, Int) -> Unit = { _, _ -> }
 ) {
     // Search and filter capabilities for a pro UX layout
     var searchQuery by remember { mutableStateOf("") }
+
+    // Create grid state with saved scroll position
+    val listState = rememberLazyGridState(
+        initialFirstVisibleItemIndex = savedScrollIndex,
+        initialFirstVisibleItemScrollOffset = savedScrollOffset
+    )
+
+    // Save scroll position when it changes
+    LaunchedEffect(listState.firstVisibleItemIndex, listState.firstVisibleItemScrollOffset) {
+        onSaveScroll(listState.firstVisibleItemIndex, listState.firstVisibleItemScrollOffset)
+    }
+
     val filteredCategories = remember(searchQuery, categories) {
         if (searchQuery.trim().isEmpty()) {
             categories
@@ -533,6 +555,7 @@ fun MainScreen(
             } else {
                 LazyVerticalGrid(
                     columns = GridCells.Adaptive(minSize = 140.dp),
+                    state = listState,
                     horizontalArrangement = Arrangement.spacedBy(12.dp),
                     verticalArrangement = Arrangement.spacedBy(12.dp),
                     modifier = Modifier.fillMaxSize().padding(bottom = 16.dp)
