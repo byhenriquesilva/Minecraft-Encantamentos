@@ -414,7 +414,7 @@ fun MainScreen(
                 ) {
                     Column {
                         Text(
-                            text = "Mesa de Magia",
+                            text = "Guia de encantamentos",
                             style = MaterialTheme.typography.titleLarge,
                             color = OffWhiteText
                         )
