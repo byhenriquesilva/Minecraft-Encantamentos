@@ -1,5 +1,6 @@
 package com.example.ui
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.*
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.Canvas
@@ -659,7 +660,7 @@ fun CategoryCard(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DetailScreen(
+fun DetailScreen(   
     category: CategoryConfig,
     checkedEnchantments: Set<String>,
     onBack: () -> Unit,
@@ -670,6 +671,8 @@ fun DetailScreen(
     val activeCount = checkedEnchantments.size
     val percent = if (totalCount > 0) (activeCount.toFloat() / totalCount * 100).toInt() else 0
     val isComplete = percent == 100
+
+    BackHandler { onBack() }
 
     Scaffold(
         topBar = {
