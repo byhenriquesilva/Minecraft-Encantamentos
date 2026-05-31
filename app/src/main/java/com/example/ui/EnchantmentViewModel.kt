@@ -22,6 +22,7 @@ import kotlinx.coroutines.launch
 sealed class AppScreen {
     object Home : AppScreen()
     object Main : AppScreen()
+    object Encyclopedia : AppScreen()
     data class Detail(val categoryId: String) : AppScreen()
 }
 

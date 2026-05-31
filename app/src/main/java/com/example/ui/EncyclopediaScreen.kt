@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -318,6 +319,7 @@ fun Int.toRoman(): String = when (this) {
     else -> this.toString()
 }
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun EncyclopediaScreen(onBack: () -> Unit) {
     BackHandler { onBack() }
@@ -426,6 +428,7 @@ fun EncyclopediaScreen(onBack: () -> Unit) {
     }
 }
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun EnchantmentCard(enchantment: EnchantmentInfo, onClick: () -> Unit) {
     val levelText = if (enchantment.maxLevel == 1) "I" else "I–${enchantment.maxLevel.toRoman()}"
@@ -506,6 +509,7 @@ fun EnchantmentCard(enchantment: EnchantmentInfo, onClick: () -> Unit) {
     }
 }
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun ItemChip(name: String) {
     Surface(
@@ -522,6 +526,7 @@ fun ItemChip(name: String) {
     }
 }
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun EnchantmentDetailDialog(enchantment: EnchantmentInfo, onDismiss: () -> Unit) {
     AlertDialog(

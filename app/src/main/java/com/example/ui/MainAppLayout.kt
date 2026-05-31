@@ -127,22 +127,23 @@ fun MainAppLayout(viewModel: EnchantmentViewModel) {
                     is AppScreen.Home -> IntroScreen(onStart = {
                         viewModel.navigateTo(AppScreen.Main)
                     })
-                    is AppScreen.Main -> MainScreen(
-                        categories = viewModel.categories,
-                        selections = selections,
-                        onSelectItem = { catId ->
-                            viewModel.navigateTo(AppScreen.Detail(catId))
-                        },
-                        onResetAll = {
-                            viewModel.resetAllProgress()
-                        },
-                        savedScrollIndex = viewModel.savedScrollIndex,
-                        savedScrollOffset = viewModel.savedScrollOffset,
-                        onSaveScroll = { index, offset ->
-                            viewModel.savedScrollIndex = index
-                            viewModel.savedScrollOffset = offset
-                        }
-                    )
+                   is AppScreen.Main -> MainScreen(
+    categories = viewModel.categories,
+    selections = selections,
+    onSelectItem = { catId ->
+        viewModel.navigateTo(AppScreen.Detail(catId))
+    },
+    onResetAll = {
+        viewModel.resetAllProgress()
+    },
+    savedScrollIndex = viewModel.savedScrollIndex,
+    savedScrollOffset = viewModel.savedScrollOffset,
+    onSaveScroll = { index, offset ->
+        viewModel.savedScrollIndex = index
+        viewModel.savedScrollOffset = offset
+    },
+    onOpenEncyclopedia = { viewModel.navigateTo(AppScreen.Encyclopedia) }
+)
                     is AppScreen.Detail -> {
                         val category = viewModel.categories.find { it.id == target.categoryId }
                         if (category != null) {
@@ -161,6 +162,9 @@ fun MainAppLayout(viewModel: EnchantmentViewModel) {
                             viewModel.navigateTo(AppScreen.Main)
                         }
                     }
+                    is AppScreen.Encyclopedia -> EncyclopediaScreen(
+    onBack = { viewModel.navigateTo(AppScreen.Main) }
+)
                 }
             }
         }
@@ -350,7 +354,7 @@ fun IntroScreen(onStart: () -> Unit) {
             shape = RoundedCornerShape(16.dp)
         ) {
             Text(
-                text = "ABRIR MESA DE ENCANTAMENTOS",
+                text = "ABRIR GUIA DE ENCANTAMENTOS",
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold,
                 letterSpacing = 1.sp
@@ -367,7 +371,8 @@ fun MainScreen(
     onResetAll: () -> Unit,
     savedScrollIndex: Int = 0,
     savedScrollOffset: Int = 0,
-    onSaveScroll: (Int, Int) -> Unit = { _, _ -> }
+    onSaveScroll: (Int, Int) -> Unit = { _, _ -> },
+    onOpenEncyclopedia: () -> Unit,
 ) {
     // Search and filter capabilities for a pro UX layout
     var searchQuery by remember { mutableStateOf("") }
@@ -414,17 +419,22 @@ fun MainScreen(
                 ) {
                     Column {
                         Text(
-                            text = "Guia de encantamentos",
+                            text = "Encantamentos",
                             style = MaterialTheme.typography.titleLarge,
                             color = OffWhiteText
                         )
                         Text(
-                            text = "Inventário de Sobrevivência",
+                            text = "Lista de Itens",
                             style = MaterialTheme.typography.bodyMedium,
                             color = MutedSlateText
                         )
                     }
-
+                    IconButton(onClick = onOpenEncyclopedia,modifier = Modifier
+    .background(EnchantmentPurpleNeon.copy(alpha = 0.15f), RoundedCornerShape(8.dp))
+    .border(1.dp, EnchantmentPurpleNeon.copy(alpha = 0.4f), RoundedCornerShape(8.dp))) {
+    Icon(Icons.Default.List, contentDescription = "Grimório", tint = EnchantmentPurpleNeon)
+}
+Spacer(Modifier.width(2.dp))
                     // Reset button styled as classic stone anvil icon
                     IconButton(
                         onClick = onResetAll,
